@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.abhinay.RestAbhinay.Exception.CloudVendorNotFoundException;
 import com.abhinay.RestAbhinay.Model.CloudVendor;
 import com.abhinay.RestAbhinay.Repository.cloudvendorRepositry;
 import com.abhinay.RestAbhinay.Service.CloudVendorService;
@@ -41,6 +42,8 @@ public class CloudVendorServiceImpl implements CloudVendorService {
 	@Override
 	public CloudVendor getCloudVendor(String cloudvendorId) {
 		// More Business logic
+		if(cloudvendorRepositry.findById(cloudvendorId).isEmpty())
+			throw new CloudVendorNotFoundException("Requested Cloud Vendor doesn't exists");
 		return cloudvendorRepositry.findById(cloudvendorId).get();
 
 	}
